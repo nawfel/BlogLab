@@ -1,4 +1,5 @@
 ﻿using BlogLab.Models;
+using BlogLab.Repository.Interfaces;
 using Dapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
