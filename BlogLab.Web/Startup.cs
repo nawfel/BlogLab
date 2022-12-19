@@ -1,6 +1,7 @@
 using BlogLab.Identity;
 using BlogLab.Models;
 using BlogLab.Models.Settings;
+using BlogLab.Repository;
 using BlogLab.Repository.Interfaces;
 using BlogLab.Services;
 using BlogLab.Web.Extensions;
@@ -27,7 +28,7 @@ namespace BlogLab.Web
         public IConfiguration config { get; }
         public Startup(IConfiguration configuration)
         {
-            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
+          //  JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
             config = configuration;
         }
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -35,18 +36,16 @@ namespace BlogLab.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CloudinaryOptions>(config.GetSection("CloudinaryOptions"));
-
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IPhotoServices, PhotoService>();
+            services.AddScoped<IPhotoService, PhotoService>();
 
-            services.AddScoped<IBlogRepository, IBlogRepository>();
-            services.AddScoped<IBlogCommentRepository, IBlogCommentRepository>();
-            services.AddScoped<IAccountRepository, IAccountRepository>();
-            services.AddScoped<IPhotoServices, PhotoService>();
-
+            services.AddScoped<IBlogRepository, BlogRepository>();
+            services.AddScoped<IBlogCommentRepository, BlogCommentRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddIdentityCore<ApplicationUserIdentity>(opt =>
             {
-                opt.Password.RequireNonAlphanumeric = true;
+                opt.Password.RequireNonAlphanumeric = false;
             })
                 .AddUserStore<UserStore>()
                 .AddDefaultTokenProviders()
@@ -107,10 +106,11 @@ namespace BlogLab.Web
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    endpoints.MapControllers();
-                });
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action}/{id?}"
+                    );
+
             });
         }
     }

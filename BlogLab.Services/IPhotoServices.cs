@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BlogLab.Services
 {
-    public interface IPhotoServices
+    public interface IPhotoService
     {
         Task<ImageUploadResult> AddPhotoAsync(IFormFile file);
         public Task<DeletionResult> DeletePhotoAsync(string publicId);

@@ -34,7 +34,6 @@ namespace BlogLab.Identity
 
         public void Dispose()
         {
-            throw new NotImplementedException();
         }
 
         public Task<ApplicationUserIdentity> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)

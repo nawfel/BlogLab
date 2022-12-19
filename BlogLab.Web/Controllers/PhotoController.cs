@@ -16,13 +16,13 @@ namespace BlogLab.Web.Controllers
     [ApiController]
     public class PhotoController : ControllerBase
     {
-        private readonly PhotoRepository _photoRepository;
+        private readonly IPhotoRepository _photoRepository;
         private readonly IBlogRepository _blogRepository;
-        private readonly PhotoService _photoService;
+        private readonly IPhotoService _photoService;
 
-        public PhotoController(PhotoRepository photoRepository,
+        public PhotoController(IPhotoRepository photoRepository,
             IBlogRepository blogRepository,
-            PhotoService photoService)
+            IPhotoService photoService)
         {
             _photoRepository = photoRepository;
             _blogRepository = blogRepository;
@@ -53,7 +53,7 @@ namespace BlogLab.Web.Controllers
             return Ok(photos);
         }
 
-        [HttpGet("{photoId")]
+        [HttpGet("{photoId}")]
         public async Task<ActionResult<Photo>> Get(int photoId)
         {
             var photos = await _photoRepository.GetAsync(photoId);

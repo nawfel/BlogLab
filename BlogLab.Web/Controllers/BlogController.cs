@@ -3,9 +3,11 @@ using BlogLab.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BlogLab.Web.Controllers
@@ -27,19 +29,25 @@ namespace BlogLab.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<BlogController>> Create(BlogCreate blogCreate)
         {
-            int applicationUserId = int.Parse(User.Claims.First(i => i.Type == JwtRegisteredClaimNames.NameId).Value);
-            if (blogCreate.PhotoId.HasValue)
+            try
             {
-                var photo = await _photoRepository.GetAsync(blogCreate.PhotoId.Value);
-                if (photo.ApplicationUserId != applicationUserId)
+                int applicationUserId = int.Parse(User.Claims.First(x => x.Type == JwtRegisteredClaimNames.NameId).Value);
+                if (blogCreate.PhotoId.HasValue)
                 {
-                    return BadRequest("you did not upload the photo");
+                    var photo = await _photoRepository.GetAsync(blogCreate.PhotoId.Value);
+                    if (photo.ApplicationUserId != applicationUserId)
+                    {
+                        return BadRequest("you did not upload the photo");
+                    }
                 }
-
+                var blog = _blogRepository.UpsertAsync(blogCreate, applicationUserId);
+                return Ok(blog);
             }
-            var blog = await _blogRepository.UpsertAsync(blogCreate, applicationUserId);
-            return Ok(blog);
-
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            
         }
         [HttpGet]
         public async Task<ActionResult<PageResults<Blog>>> GetAll([FromQuery] BlogPaging blogPaging)

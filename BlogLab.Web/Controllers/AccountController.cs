@@ -75,6 +75,10 @@ namespace BlogLab.Web.Controllers
             }
             return BadRequest("Invalid Login Attempt.");
         }
-
+        [HttpGet("test")]
+        public async Task<ActionResult<string>> test()
+        {
+            return Ok("ok");
+        }
     }
 }

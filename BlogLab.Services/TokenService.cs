@@ -29,7 +29,7 @@ namespace BlogLab.Services
                new Claim(JwtRegisteredClaimNames.NameId,user.ApplicationUserId.ToString()),
                new Claim(JwtRegisteredClaimNames.Email,user.Email)
            };
-            var creds = new SigningCredentials(_Key, SecurityAlgorithms.HmacSha512Signature);
+            var creds = new SigningCredentials(_Key, SecurityAlgorithms.HmacSha256) ;
             var token = new JwtSecurityToken(
                 _issuer,
                 _issuer,
