@@ -8,22 +8,6 @@ import {TooltipModule} from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SummaryPipe,
-    BlogComponent,
-    BlogCardComponent,
-    BlogEditComponent,
-    BlogsComponent,
-    FamousBlogsComponent,
-    CommentBoxComponent,
-    CommentSystemComponent,
-    CommentsComponent,
-    DashboardComponent,
-    HomeComponent,
-    LoginComponent,
-    NavbarComponent,
-    PhotoAlbumComponent,
-    RegisterComponent
   ],
   imports: [
     BrowserModule,

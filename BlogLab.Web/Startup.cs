@@ -28,7 +28,7 @@ namespace BlogLab.Web
         public IConfiguration config { get; }
         public Startup(IConfiguration configuration)
         {
-          //  JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
+          
             config = configuration;
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
@@ -52,7 +52,7 @@ namespace BlogLab.Web
                 .AddDefaultTokenProviders()
                 .AddSignInManager<SignInManager<ApplicationUserIdentity>>();
 
-            services.AddControllers();
+            services.AddControllers();                
             services.AddCors();
             services.AddAuthentication(
                 options =>

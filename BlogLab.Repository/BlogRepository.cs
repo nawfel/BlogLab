@@ -92,7 +92,7 @@ namespace BlogLab.Repository
             {
                 await connection.OpenAsync();
                 blog = await connection.QueryFirstOrDefaultAsync<Blog>(
-                    "Photo_Get",
+                    "Blog_Get",
                     new { blogId = blogId },
                     commandType: System.Data.CommandType.StoredProcedure);
 
@@ -103,10 +103,10 @@ namespace BlogLab.Repository
         public async Task<Blog> UpsertAsync(BlogCreate blogCreate, int applicationUserId)
         {
             var dataTable = new System.Data.DataTable();
-            dataTable.Columns.Add("BlogId", typeof(string));
+            dataTable.Columns.Add("BlogId", typeof(int));
             dataTable.Columns.Add("Title", typeof(string));
             dataTable.Columns.Add("Content", typeof(string));
-            dataTable.Columns.Add("PhotoId", typeof(string));
+            dataTable.Columns.Add("PhotoId", typeof(int));
 
             dataTable.Rows.Add(blogCreate.BlogId, blogCreate.Title, blogCreate.Content,blogCreate.PhotoId) ;
 
@@ -121,7 +121,7 @@ namespace BlogLab.Repository
                     commandType: System.Data.CommandType.StoredProcedure);
             }
             newBlogId = newBlogId ?? blogCreate.BlogId;
-            Blog blog =await GetAsync(newBlogId.Value);
+            var blog =await GetAsync(newBlogId.Value);
             return blog;
 
         }
