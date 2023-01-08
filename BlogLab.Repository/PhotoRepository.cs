@@ -27,7 +27,7 @@ namespace BlogLab.Repository
                 await connection.OpenAsync();
                 affectedRows = await connection.ExecuteAsync("Photo_Delete",
                     new { PhotoId = photoId },
-                    commandType: System.Data.CommandType.StoredProcedure);
+                    commandType: CommandType.StoredProcedure);
 
             }
             return affectedRows;
@@ -41,7 +41,7 @@ namespace BlogLab.Repository
                 await connection.OpenAsync();
                 photos = await connection.QueryAsync<Photo>("Photo_GetByUserId",
                     new { ApplicationUserId = applicationUserId },
-                    commandType: System.Data.CommandType.StoredProcedure);
+                    commandType: CommandType.StoredProcedure);
 
             }
             return photos.ToList();
@@ -56,7 +56,7 @@ namespace BlogLab.Repository
                 photo = await connection.QueryFirstOrDefaultAsync<Photo>(
                     "Photo_Get",
                     new { photoId = photoId },
-                    commandType: System.Data.CommandType.StoredProcedure);
+                    commandType: CommandType.StoredProcedure);
 
             }
             return photo;
@@ -81,7 +81,7 @@ namespace BlogLab.Repository
                     new {
                         @PhotoType = dataTable.AsTableValuedParameter("dbo.PhotoType"),
                         @ApplicationUserId = applicationUserId},
-                    commandType: System.Data.CommandType.StoredProcedure);
+                    commandType: CommandType.StoredProcedure);
 
             }
             Photo photo = await GetAsync(newPhotoId);
