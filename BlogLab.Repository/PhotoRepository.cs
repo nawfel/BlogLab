@@ -64,7 +64,6 @@ namespace BlogLab.Repository
 
         public async Task<Photo> InsertAsync(PhotoCreate photoCreate, int applicationUserId)
         {
-            
             var dataTable = new DataTable();
             dataTable.Columns.Add("PublicId", typeof(string));
             dataTable.Columns.Add("ImageUrl", typeof(string));
