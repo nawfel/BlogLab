@@ -9,11 +9,13 @@ import { Observable, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../services/account.service';
 import { catchError } from 'rxjs/operators'
+import { Router } from '@angular/router';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
   constructor(
     private toastr: ToastrService,
+    private router : Router,
     private accountService: AccountService
   ) { }
 
@@ -56,7 +58,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       this.toastr.error(errorMessage, error.statusText);
       console.log(error.error);
     }
-    else if (!!error?.error.errors?.Content && (typeof error.error.error.Content) === 'object') {
+    else if (!!error?.error?.errors?.Content && (typeof error.error.error.Content) === 'object') {
       let errorObject = error.error.errors.Content;
       let errorMessage = '';
       for (const key in errorObject) {
@@ -82,6 +84,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     let errorMessage = 'Please login yo your account';
     this.accountService.logout();
     this.toastr.error(errorMessage, error.statusCode);
+    this.router.navigate(['/login'])
   }
   handle500Error(error: any) {
     this.toastr.error('Please contact the administrator. An error happened is the server');

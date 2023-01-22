@@ -23,7 +23,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
-
+import { LoginComponent } from './components/login/login.component';
+import{BsDropdownModule} from 'ngx-bootstrap/dropdown'
+import{CollapseModule} from 'ngx-bootstrap/collapse'
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +43,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     NavbarComponent,
     NotFoundComponent,
     PhotoAlbumComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,9 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     HttpClientModule,
     ToastrModule.forRoot({
       positionClass:'toast-bottom-right'
-    })
+    }),
+    CollapseModule.forRoot(),
+    BsDropdownModule.forRoot()
   ],
   providers: [
     HttpClient,
