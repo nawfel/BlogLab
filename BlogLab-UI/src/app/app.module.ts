@@ -26,6 +26,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { LoginComponent } from './components/login/login.component';
 import{BsDropdownModule} from 'ngx-bootstrap/dropdown'
 import{CollapseModule} from 'ngx-bootstrap/collapse'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,13 +45,15 @@ import{CollapseModule} from 'ngx-bootstrap/collapse'
     NotFoundComponent,
     PhotoAlbumComponent,
     RegisterComponent,
-    LoginComponent
+   LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     ToastrModule.forRoot({
       positionClass:'toast-bottom-right'
     }),

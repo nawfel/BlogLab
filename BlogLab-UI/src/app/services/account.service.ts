@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { ApplicationUserCreate } from '../models/account/application-user-create.model';
 import { ApplicationUser } from '../models/account/application-user-model';
 import { map } from 'rxjs/operators'
+import { ApplicationUserLogin } from '../models/account/application-user-login.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +16,7 @@ export class AccountService {
     this.currentUserSubject$ = new BehaviorSubject<ApplicationUser>(JSON.parse(localStorage.getItem('currentUser')));
   }
 
-  login(model: ApplicationUser): Observable<ApplicationUser> {
+  login(model: ApplicationUserLogin): Observable<ApplicationUser> {
 
     return this.http.post(`${environment.webapi}/account/login`, model).pipe(map((user: ApplicationUser) => {
       if (user) {
@@ -58,7 +59,7 @@ export class AccountService {
   }
   public isLoggedIn() {
     const currentUser = this.currentUserValue;
-    const isLoggedIn = currentUser && currentUser.token;
+    const isLoggedIn = !!currentUser && !!currentUser.token;
     return isLoggedIn;
   }
 }
